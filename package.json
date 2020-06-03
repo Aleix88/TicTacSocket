@@ -1,0 +1,14 @@
+{
+  "name": "tictacsocket",
+  "version": "1.0.0",
+  "description": "TiaTacToe game but with sockets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aleix Díaz",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

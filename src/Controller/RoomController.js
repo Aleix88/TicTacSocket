@@ -1,6 +1,7 @@
 const Room = function (name) {
     this.name = name
     this.isFull = false
+    this.usernames = []
 }
 
 var createdRooms = []
@@ -23,32 +24,36 @@ function isRoomCreated(roomName) {
     return false
 }
 
-function joinRoom(req, res) {
-    const {roomName} = req.body
+function joinRoom(socket, data) {
+    const {roomName, userName} = data
+
     let room = checkRoom(roomName)
     if (room != null) {
         console.log('Joining room...')
         room.isFull = true
-        res.render('home', {error: 'Joining room...'})
+        room.usernames.push(userName)
+        socket.username = userName
+        socket.join(roomName)
     } else {
         console.log('Not valid room')
-        res.render('home', {error: 'This room is already in use or it doesnt exist'})
     }
 }
 
-function createRoom(req, res) {
-    const {roomName} = req.body
+function createRoom(socket, data) {
+    const {roomName, userName} = data
     if (isRoomCreated(roomName)) {
         console.log('This room is already created...')
-        res.render('home', {error: 'This room is already created'})
     } else {
         console.log('New room created!')
-        createdRooms.push(new Room(roomName))
-        res.render('home')
+        socket.username = userName
+        socket.join(roomName)
+        let newRoom = new Room(roomName)
+        newRoom.usernames.push(userName)
+        createdRooms.push(newRoom)
     }
 }
 
-module.exports.registerRoutes = ((app) => {
-    app.post('/create-room', createRoom)
-    app.post('/join-room', joinRoom)
+module.exports.handleRoomConnections = ((socket) => {
+    socket.on('join room', (data) => {joinRoom(socket, data)})
+    socket.on('create room', (data) => {createRoom(socket, data)})
 })

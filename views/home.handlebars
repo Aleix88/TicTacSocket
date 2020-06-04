@@ -7,15 +7,22 @@
 <div class="header">
     <div class="menu-container">
         <h1>Tic Tac Socket</h1>
-        <form action="/join-room" method="POST">
-            <input name="roomName" type="text" placeholder="Room name">
-            <button type="submit">Join room</button>
-        </form>
-        <form action="/create-room" method="POST">
-            <input name="roomName" type="text" placeholder="Room name">
-            <button type="submit">Create room</button>
-        </form>
-        <p>Errors: {{error}}</p>
+        <div class="menu-form">
+            <div class="username-container">
+                <label for="userInput" class="menu-item">Enter your username</label>
+                <input id="userInput" class="menu-item" type="text" placeholder="Username">
+            </div>
+            <div class="join-container">
+                <label for="joinInput" class="menu-item">To join an existing room: </label>
+                <input id="joinInput" class="menu-item" name="roomName" type="text" placeholder="Room name">
+                <button id="joinButton" class="menu-item">Join room</button>
+            </div>
+            <div class="create-container">
+                <label for="createInput" class="menu-item">To create a room: </label>
+                <input id="createInput" class="menu-item" name="roomName" type="text" placeholder="Room name">
+                <button id="createButton" class="menu-item">Create room</button>
+            </div>
+        </div>
     </div>
     <div class="header-image-container">
 

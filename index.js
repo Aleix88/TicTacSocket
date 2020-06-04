@@ -34,10 +34,6 @@ app.get('/', (req, res) => {
     res.render('home')
 })
 
-//POST
-const roomController = require('./src/Controller/RoomController')
-roomController.registerRoutes(app)
-
 // Middlewares
 app.use((req, res) => {
     res.type('text/plain')

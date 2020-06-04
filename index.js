@@ -9,11 +9,19 @@ app.set('view engine', 'handlebars');
 //Server config
 app.set('port', process.env.PORT || 3000);
 app.use(express.static('public'))
+app.use(express.urlencoded({
+    extended: true
+}));
 
 //Routes
+//GET
 app.get('/', (req, res) => {
     res.render('home')
 })
+
+//POST
+const roomController = require('./src/Controller/RoomController')
+roomController.registerRoutes(app)
 
 // Middlewares
 app.use((req, res) => {

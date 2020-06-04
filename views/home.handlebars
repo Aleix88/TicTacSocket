@@ -1,1 +1,18 @@
-<h1>Hello world!</h1>
+
+<div class="header">
+    <div class="menu-container">
+        <h1>Tic Tac Socket</h1>
+        <form action="/join-room" method="POST">
+            <input name="roomName" type="text" placeholder="Room name">
+            <button type="submit">Join room</button>
+        </form>
+        <form action="/create-room" method="POST">
+            <input name="roomName" type="text" placeholder="Room name">
+            <button type="submit">Create room</button>
+        </form>
+        <p>Errors: {{error}}</p>
+    </div>
+    <div class="header-image-container">
+
+    </div>
+</div>

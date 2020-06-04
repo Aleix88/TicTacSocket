@@ -1,8 +1,19 @@
-var express = require('express')
-var app = express();
+let express = require('express')
+let app = express();
+let http = require('http').createServer(app)
+let io = require('socket.io')(http)
 
 //Handlerbars
-const handlebars = require('express-handlebars').create({defaultLayout: 'main'})
+const handlebars = require('express-handlebars').create({
+    defaultLayout: 'main',
+    helpers: {
+        section: function (name, options) {
+            if (!this._sections) this._sections = {}
+            this._sections[name] = options.fn(this)
+            return null
+        }
+    }
+})
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
@@ -12,6 +23,10 @@ app.use(express.static('public'))
 app.use(express.urlencoded({
     extended: true
 }));
+
+//Config sockets
+const socketsManager = require('./src/Controller/SocketsManager')
+socketsManager.prepareSockets(io)
 
 //Routes
 //GET
@@ -35,6 +50,6 @@ app.use((err, req, res, next) => {
     console.log(err)
 })
 
-app.listen(app.get('port'), () => {
+http.listen(app.get('port'), () => {
     console.log( 'Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.' );
 })

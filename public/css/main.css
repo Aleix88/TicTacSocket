@@ -57,27 +57,19 @@ input:focus {
 
 .menu-container {
     margin-top: 4em;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-@media (min-width: 800px) {
-
-    .header {
-        display: flex;
-    }
-
-    .menu-container {
-        width: 50%;
-    }
-    
-    .header-image-container {
-        width: 50%;
-    }
+.header-image-container {
+    display: none;
 }
 
 .menu-form {
-    margin: 0 5em;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
+    max-width: 400px;
 }
 
 .menu-item {
@@ -100,4 +92,27 @@ input:focus {
 .join-container {
     display: flex;
     flex-direction: column;
+}
+
+@media (min-width: 800px) {
+
+    .header-image-container {
+        display: block;
+    }
+
+    .header {
+        display: flex;
+    }
+
+    .menu-container {
+        width: 50%;
+    }
+    
+    .header-image-container {
+        width: 50%;
+    }
+
+    .menu-form {
+        margin: 0 5em;
+    }
 }

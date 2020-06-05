@@ -24,36 +24,43 @@ function isRoomCreated(roomName) {
     return false
 }
 
-function joinRoom(socket, data) {
-    const {roomName, userName} = data
-
+function joinRoom(req, res) {
+    const roomName = req.body.joinedRoom
+    const userName = req.body.userName
     let room = checkRoom(roomName)
     if (room != null) {
         console.log('Joining room...')
         room.isFull = true
         room.usernames.push(userName)
-        socket.username = userName
-        socket.join(roomName)
+        req.session.userName = userName
+        req.session.roomName = roomName
+        res.redirect('/room/' + roomName)
     } else {
         console.log('Not valid room')
+        res.render('home')
     }
 }
 
-function createRoom(socket, data) {
-    const {roomName, userName} = data
+function createRoom(req, res) {
+    const roomName = req.body.createdRoom
+    const userName = req.body.userName
     if (isRoomCreated(roomName)) {
         console.log('This room is already created...')
+        res.render('home')
     } else {
         console.log('New room created!')
-        socket.username = userName
-        socket.join(roomName)
         let newRoom = new Room(roomName)
         newRoom.usernames.push(userName)
         createdRooms.push(newRoom)
+        req.session.userName = userName
+        req.session.roomName = roomName
+        res.redirect('/room/' + roomName)
     }
 }
 
-module.exports.handleRoomConnections = ((socket) => {
-    socket.on('join room', (data) => {joinRoom(socket, data)})
-    socket.on('create room', (data) => {createRoom(socket, data)})
+module.exports.handleRoutes = ((app) => {
+    
+    app.post('/join-room', joinRoom)
+    app.post('/create-room', createRoom)
+
 })

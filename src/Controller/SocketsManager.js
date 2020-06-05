@@ -1,8 +1,10 @@
-const roomController = require('./RoomController')
 
 function handleConnection(socket) {
     console.log('User connected!')
-    roomController.handleRoomConnections(socket)
+}
+
+function deleteSocket(userName, roomName) {
+    
 }
 
 module.exports.prepareSockets = ((io) => {

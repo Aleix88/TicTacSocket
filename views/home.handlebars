@@ -7,22 +7,22 @@
 <div class="header">
     <div class="menu-container">
         <h1>Tic Tac Socket</h1>
-        <div class="menu-form">
+        <form id="menuForm" class="menu-form" method="POST">
             <div class="username-container">
                 <label for="userInput" class="menu-item">Enter your username</label>
-                <input id="userInput" class="menu-item" type="text" placeholder="Username">
+                <input id="userInput" class="menu-item" name="userName" type="text" placeholder="Username">
             </div>
             <div class="join-container">
                 <label for="joinInput" class="menu-item">To join an existing room: </label>
-                <input id="joinInput" class="menu-item" name="roomName" type="text" placeholder="Room name">
-                <button id="joinButton" class="menu-item join-button">Join room</button>
+                <input id="joinInput" class="menu-item" name="joinedRoom" type="text" placeholder="Room name">
+                <button id="joinButton" onclick="javascript: form.action='/join-room';" class="menu-item join-button">Join room</button>
             </div>
             <div class="create-container">
                 <label for="createInput" class="menu-item">To create a room: </label>
-                <input id="createInput" class="menu-item" name="roomName" type="text" placeholder="Room name">
-                <button id="createButton" class="menu-item create-button">Create room</button>
+                <input id="createInput" class="menu-item" name="createdRoom" type="text" placeholder="Room name">
+                <button id="createButton" onclick="javascript: form.action='/create-room';" class="menu-item create-button">Create room</button>
             </div>
-        </div>
+        </form>
     </div>
     <div class="header-image-container">
 

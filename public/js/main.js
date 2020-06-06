@@ -6,11 +6,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     const userNameInput = document.getElementById('userInput')
 
     form.addEventListener('submit', (e) => {
-        let socket = io()
-        socket.emit('connect', {
-            roomName: joinInput.value,
-            userName: userNameInput.value
-        })
+
     })
 
 })

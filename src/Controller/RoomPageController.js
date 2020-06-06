@@ -1,8 +1,10 @@
+const socketManager = require('./SocketsManager')
 
 function loadRoom(req, res) {
-    console.log("Session: ")
-    console.log(req.session)
-    res.render('room')
+    res.render('room', {
+        userName: req.session.userName,
+        roomName: req.session.roomName
+    })
 }
 
 module.exports.handleRoutes = ((app) => {

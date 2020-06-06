@@ -30,7 +30,7 @@ app.set('view engine', 'handlebars');
 
 //Server config
 app.set('port', process.env.PORT || 3000);
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({
     extended: true
 }));

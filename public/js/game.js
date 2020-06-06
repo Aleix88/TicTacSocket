@@ -9,4 +9,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
         roomName: roomName
     })
 
+    socket.on('joinedRoom', (msg) => {
+        document.getElementById('players').innerHTML = 'Players joined: 2/2'
+    })
+
 })

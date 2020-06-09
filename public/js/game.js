@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
     // //Wait players to join
     socket.on('joinedRoom', (msg) => {
-        $('.modal-container').addClass('no-display')
+        $('#wait-modal').addClass('no-display')
     })
 
     // //Wait opponent turn
@@ -23,11 +23,13 @@ document.addEventListener('DOMContentLoaded', function (event) {
         token.removeClass('token-box')
         token.removeClass('token-cross')
         token.addClass('token token-circle')
+        $('#disconnected-modal').addClass('no-display')
     })
 
     //User disconnected
     socket.on('opponent-disconnected', () => {
         console.log('Opponent disconnected')
+        $('#disconnected-modal').removeClass('no-display')
     })
 
     function sendTokenPlacement(x, y) {

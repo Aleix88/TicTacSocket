@@ -29,6 +29,7 @@ function deleteClient(socket, userName, roomName) {
 
 function findClient(socket) {
     for (let room in connectedSockets) {
+        console.log(connectedSockets)
         let roomClients = connectedSockets[room]
         for (let client of roomClients) {
             if (client.socket === socket) {

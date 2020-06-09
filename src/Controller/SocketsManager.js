@@ -57,8 +57,9 @@ function handleConnection(socket) {
             connectedSockets[roomName] = [new UserSocket(socket, userName, roomName)]
         }  else {
             connectedSockets[roomName].push(new UserSocket(socket, userName, roomName))
-            sendMessage(connectedSockets[roomName][0].userName, roomName, JOINED_EVENT)
-            sendMessage(userName, roomName, JOINED_EVENT)
+            const random = Math.floor(Math.random() * (2))
+            sendMessage(connectedSockets[roomName][0].userName, roomName, JOINED_EVENT, {isYourTurn: random === 1})
+            sendMessage(userName, roomName, JOINED_EVENT, {isYourTurn: random === 0})
         }
     })
 
@@ -79,7 +80,10 @@ function handleConnection(socket) {
         const opponent = findOpponent(client.userName, client.room)
         //Check if opponent is still connected
         if (opponent) {
-            sendMessage(opponent.userName, opponent.room, 'opponent-placed-token', data.coordinates)
+            sendMessage(opponent.userName, opponent.room, 'opponent-placed-token', {
+                coordinates:data.coordinates,
+                isYourTurn: true
+            })
         }
     })
 }

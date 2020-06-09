@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function (event) {
     let socket = io()
+    let isYourTurn = false
 
     const userName = document.getElementById('userName').innerHTML
     const roomName = document.getElementById('roomName').innerHTML
@@ -12,23 +13,26 @@ document.addEventListener('DOMContentLoaded', function (event) {
     })
 
     // //Wait players to join
-    socket.on('joinedRoom', (msg) => {
+    socket.on('joinedRoom', (data) => {
         $('#wait-modal').addClass('no-display')
         $('#disconnected-modal').addClass('no-display')
+        isYourTurn = data.isYourTurn
+        if (isYourTurn) $('.turn-label')[0].innerHTML = 'Is your turn!'
     })
 
-    // //Wait opponent turn
-    socket.on('opponent-placed-token', (coordinates) => {
-        const position = coordinates.x + coordinates.y * 3
+    //Wait opponent turn
+    socket.on('opponent-placed-token', (data) => {
+        const position = data.coordinates.x + data.coordinates.y * 3
         const token = $('.board-game').children().eq(position).children().first()
         token.removeClass('token-box')
         token.removeClass('token-cross')
         token.addClass('token token-circle')
+        isYourTurn = data.isYourTurn
+        $('.turn-label')[0].innerHTML = 'Is your turn!'
     })
 
     //User disconnected
     socket.on('opponent-disconnected', () => {
-        console.log('Opponent disconnected')
         $('#disconnected-modal').removeClass('no-display')
     })
 
@@ -43,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
     //Add token on click
     $(".token-box").on('click', function(event) {
+        if (!isYourTurn) return
+        isYourTurn = false
+        $('.turn-label')[0].innerHTML = 'Opponent turn'
         const target = event.target
         if ($(target).hasClass('token')) return
         $(target).removeClass('token-box')

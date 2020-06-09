@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
         token.addClass('token token-circle')
     })
 
+    //User disconnected
+    socket.on('opponent-disconnected', () => {
+        console.log('Opponent disconnected')
+    })
+
     function sendTokenPlacement(x, y) {
         socket.emit('token-placed', {
             coordinates: {

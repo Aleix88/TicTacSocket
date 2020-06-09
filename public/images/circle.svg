@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="99" height="99" viewBox="0 0 99 99">
-  <g id="Circle" fill="none" stroke="#4c6986" stroke-width="18" opacity="0.44">
+  <g id="Circle" fill="none" stroke="#39bcd4" stroke-width="18">
     <circle cx="49.5" cy="49.5" r="49.5" stroke="none"/>
     <circle cx="49.5" cy="49.5" r="40.5" fill="none"/>
   </g>

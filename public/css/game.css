@@ -22,23 +22,35 @@ body {
     background-position: center;
 }
 
-.token {
-    opacity: 0;
+.token,
+.token-box {
     width: 100%;
     height: 100%;
     transition: 300ms;
     cursor: pointer;
 }
 
+.token-box {
+    opacity: 0;
+}
+
+.token-circle,
 .token-cross {
     background-position: center;
-    background-image: url('../images/cross.svg');
     background-repeat: no-repeat;
 }
 
-.token:focus,
-.token:hover {
-    opacity: 1;
+.token-cross {
+    background-image: url('../images/cross.svg');
+}
+
+.token-circle {
+    background-image: url('../images/circle.svg');
+}
+
+.token-box:focus,
+.token-box:hover {
+    opacity: .4;
 }
 
 /* ITEMS */

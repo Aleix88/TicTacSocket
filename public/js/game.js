@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     // //Wait players to join
     socket.on('joinedRoom', (msg) => {
         $('#wait-modal').addClass('no-display')
+        $('#disconnected-modal').addClass('no-display')
     })
 
     // //Wait opponent turn
@@ -23,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
         token.removeClass('token-box')
         token.removeClass('token-cross')
         token.addClass('token token-circle')
-        $('#disconnected-modal').addClass('no-display')
     })
 
     //User disconnected

@@ -1,22 +1,25 @@
 
 document.addEventListener('DOMContentLoaded', function (event) {
+    let socket = io()
 
     const userName = document.getElementById('userName').innerHTML
     const roomName = document.getElementById('roomName').innerHTML
 
-    //Sockets connections
-    /*let socket = io()
+    //Send - Join game
     socket.emit('joinGame',  {
         userName: userName,
         roomName: roomName
     })
 
+    //Wait players to join
     socket.on('joinedRoom', (msg) => {
-        document.getElementById('players').innerHTML = 'Players joined: 2/2'
-    })*/
+        $('.modal-container').addClass('no-display')
+        console.log($('.modal-container'))
+    })
 
 
-    //Game tokens
+
+    //Add token on click
     $(".token-box").on('click', function(event) {
         const target = event.target
         if ($(target).hasClass('token')) return

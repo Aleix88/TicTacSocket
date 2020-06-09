@@ -20,9 +20,9 @@ function sendMessage(userName, roomName, event, data) {
 function deleteClient(socket, userName, roomName) {
     if (connectedSockets[roomName]) {
         connectedSockets[roomName] = connectedSockets[roomName].filter((element) => {return element.socket !== socket})
+        roomController.deleteUserFrom(userName, roomName)
         if (connectedSockets[roomName].length <= 0) {
             connectedSockets[roomName] = undefined
-            roomController.deleteRoom(roomName)
         }
     }
 }

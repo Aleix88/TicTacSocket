@@ -1,6 +1,5 @@
 const Room = function (name) {
     this.name = name
-    this.isFull = false
     this.usernames = []
 }
 
@@ -8,7 +7,7 @@ var createdRooms = []
 
 function checkRoom(roomName) {
     for (let room of createdRooms) {
-        if (room.name === roomName && !room.isFull) {
+        if (room.name === roomName && room.usernames.length < 2) {
             return room
         }
     }
@@ -30,7 +29,6 @@ function joinRoom(req, res) {
     let room = checkRoom(roomName)
     if (room != null) {
         console.log('Joining room...')
-        room.isFull = true
         room.usernames.push(userName)
         req.session.userName = userName
         req.session.roomName = roomName
@@ -62,7 +60,17 @@ function deleteRoom(roomName) {
     createdRooms = createdRooms.filter((room) => roomName !== room.name)
 }
 
-module.exports.deleteRoom = deleteRoom
+function deleteUser(userName, roomName) {
+    for (let room of createdRooms) {
+        if (room.name === roomName) {
+            room.usernames = room.usernames.filter((user) => {return user !== userName})
+            if (room.usernames.length === 0) {
+                deleteRoom(roomName)
+            }
+        }
+    }
+}
+module.exports.deleteUserFrom = deleteUser
 
 module.exports.handleRoutes = ((app) => {
     

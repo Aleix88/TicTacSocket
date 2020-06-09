@@ -1,8 +1,10 @@
+
 document.addEventListener('DOMContentLoaded', function (event) {
 
     const userName = document.getElementById('userName').innerHTML
     const roomName = document.getElementById('roomName').innerHTML
 
+    //Sockets connections
     let socket = io()
     socket.emit('joinGame',  {
         userName: userName,
@@ -12,5 +14,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
     socket.on('joinedRoom', (msg) => {
         document.getElementById('players').innerHTML = 'Players joined: 2/2'
     })
+
+
+    //Game tokens
 
 })

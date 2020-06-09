@@ -7,7 +7,7 @@ const UserSocket = function (socket, userName, room) {
     this.room = room
 }
 
-let connectedSockets = []
+let connectedSockets = {}
 let socketIO = null
 
 function sendMessage(userName, roomName, event, data) {
@@ -20,6 +20,18 @@ function deleteClient(userName, roomName) {
     if (connectedSockets[roomName].length <= 0) {
         connectedSockets[roomName] = undefined
     }
+}
+
+function findClient(socket) {
+    for (let room in connectedSockets) {
+        let roomClients = connectedSockets[room]
+        for (let client of roomClients) {
+            if (client.socket === socket) {
+                return client
+            }
+        }
+    }
+    return null
 }
 
 function handleConnection(socket) {
@@ -42,6 +54,13 @@ function handleConnection(socket) {
         const [roomName, userName] = [socket.roomName, socket.userName]
         deleteClient(userName, roomName)
         console.log(`${userName} disconected from ${roomName}.`)
+    })
+
+    socket.on('token-placed', (data) => {
+        const {x, y} = data.coordinates
+        const client = findClient(socket)
+        const opponent = connectedSockets[client.room].filter((clientAux) => client.userName !== clientAux.userName)[0]
+        sendMessage(opponent.userName, opponent.room, 'opponent-placed-token', data.coordinates)
     })
 }
 

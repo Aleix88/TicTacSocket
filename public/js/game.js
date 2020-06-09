@@ -11,13 +11,28 @@ document.addEventListener('DOMContentLoaded', function (event) {
         roomName: roomName
     })
 
-    //Wait players to join
+    // //Wait players to join
     socket.on('joinedRoom', (msg) => {
         $('.modal-container').addClass('no-display')
-        console.log($('.modal-container'))
     })
 
+    // //Wait opponent turn
+    socket.on('opponent-placed-token', (coordinates) => {
+        const position = coordinates.x + coordinates.y * 3
+        const token = $('.board-game').children().eq(position).children().first()
+        token.removeClass('token-box')
+        token.removeClass('token-cross')
+        token.addClass('token token-circle')
+    })
 
+    function sendTokenPlacement(x, y) {
+        socket.emit('token-placed', {
+            coordinates: {
+                x: x,
+                y: y
+            }
+        })
+    }
 
     //Add token on click
     $(".token-box").on('click', function(event) {
@@ -25,5 +40,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
         if ($(target).hasClass('token')) return
         $(target).removeClass('token-box')
         $(target).addClass('token')
+        const position = $(target).parent().index()
+        sendTokenPlacement(position - 3 * parseInt(position/3), parseInt(position/3))
     })
 })

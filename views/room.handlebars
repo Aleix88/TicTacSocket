@@ -1,7 +1,41 @@
 {{#section 'head'}}
-    <script type="text/javascript" src="/js/game.js"></script>
+    <link href="/css/game.css" rel="stylesheet"/>
+    {{!-- <script type="text/javascript" src="/js/game.js"></script> --}}
 {{/section}}
 
-<div id="roomName">{{roomName}}</div>
-<div id="userName">{{userName}}</div>
-<h2 id="players">Players joined: 1/2</h2>
+<div id="roomName" style="display: none;">{{roomName}}</div>
+<div id="userName" style="display: none;">{{userName}}</div>
+<div class="board-game-container">
+    <div class="board-game">
+        <div class="board-item item-top-left">
+            <div class="token token-cross"></div>
+        </div>
+        <div class="board-item item-top-middle">
+            <div class="token token-cross"></div>
+        </div>
+        <div class="board-item item-top-right">
+            <div class="token token-cross"></div>
+        </div>
+        <div class="board-item item-middle-left">
+            <div class="token token-cross"></div>
+        </div>
+        <div class="board-item item-middle-middle">
+            <div class="token token-cross"></div>
+        </div>
+        <div class="board-item item-middle-right">
+            <div class="token token-cross"></div>
+        </div>
+        <div class="board-item item-bottom-left">
+            <div class="token token-cross"></div>
+        </div>
+        <div class="board-item item-bottom-middle">
+            <div class="token token-cross"></div>
+        </div>
+        <div class="board-item item-bottom-right">
+            <div class="token token-cross"></div>
+        </div>
+    </div>
+</div>
+<div class="footer-options">
+    <p class="turn-label">Your turn</p>
+</div>

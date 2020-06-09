@@ -47,7 +47,7 @@ roomPageController.handleRoutes(app)
 
 //GET
 app.get('/', (req, res) => {
-    res.render('home')
+    res.render('room')
 })
 
 // Middlewares

@@ -15,6 +15,13 @@ function sendMessage(userName, roomName, event, data) {
     client.socket.emit(event, data)
 }
 
+function deleteClient(userName, roomName) {
+    connectedSockets[roomName] = connectedSockets[roomName].filter((element) => {return element.socket !== socket})
+    if (connectedSockets[roomName].length <= 0) {
+        connectedSockets[roomName] = undefined
+    }
+}
+
 function handleConnection(socket) {
     socket.on('joinGame', (data) => {
         const {roomName, userName} = data
@@ -33,23 +40,11 @@ function handleConnection(socket) {
 
     socket.on('disconnect', () => {
         const [roomName, userName] = [socket.roomName, socket.userName]
-        connectedSockets[roomName] = connectedSockets[roomName].filter((element) => {return element.socket !== socket})
-        if (connectedSockets[roomName].length <= 0) {
-            connectedSockets[roomName] = undefined
-        }
+        deleteClient(userName, roomName)
         console.log(`${userName} disconected from ${roomName}.`)
     })
 }
 
-function printSockets() {
-    //console.log(connectedSockets[0].userName)
-}
-
-function deleteSocket(userName, roomName) {
-    
-}
-
-module.exports.printSockets = printSockets
 
 module.exports.prepareSockets = ((io) => {
     socketIO = io 

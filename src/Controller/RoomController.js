@@ -58,6 +58,12 @@ function createRoom(req, res) {
     }
 }
 
+function deleteRoom(roomName) {
+    createdRooms = createdRooms.filter((room) => roomName !== room.name)
+}
+
+module.exports.deleteRoom = deleteRoom
+
 module.exports.handleRoutes = ((app) => {
     
     app.post('/join-room', joinRoom)

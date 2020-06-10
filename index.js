@@ -1,3 +1,4 @@
+
 var express = require('express')
 var app = express();
 var http = require('http').createServer(app)
@@ -36,11 +37,11 @@ app.use(express.urlencoded({
 }));
 
 //Config sockets
-const socketsManager = require('./src/Controller/SocketsManager')
+const socketsManager = require('./src/Model/SocketsManager')
 socketsManager.prepareSockets(io)
 
 //Routes
-const roomController = require('./src/Controller/RoomController')
+const roomController = require('./src/Model/RoomController')
 roomController.handleRoutes(app)
 const roomPageController = require('./src/Controller/RoomPageController')
 roomPageController.handleRoutes(app)

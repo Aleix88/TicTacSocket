@@ -1,4 +1,4 @@
-const socketManager = require('./SocketsManager')
+const socketManager = require('../Model/SocketsManager')
 
 function loadRoom(req, res) {
     res.render('room', {

@@ -1,4 +1,5 @@
 const roomController = require('./RoomController')
+const gameManager = require('./GameManager')
 
 //Events
 const JOINED_EVENT = 'joinedRoom'
@@ -7,6 +8,7 @@ const UserSocket = function (socket, userName, room) {
     this.socket = socket
     this.userName = userName
     this.room = room
+    this.gameID = null
 }
 
 let connectedSockets = {}
@@ -46,6 +48,13 @@ function findOpponent(userName, room) {
     return null
 }
 
+function createGame(roomName, playerOne, playerTwo) {
+      const gameID = gameManager.createGame(roomName, playerOne, playerTwo)
+      for (userSocket of connectedSockets[roomName]) {
+        userSocket.gameID = gameID
+      }
+}
+
 function handleConnection(socket) {
     socket.on('joinGame', (data) => {
         const {roomName, userName} = data
@@ -60,6 +69,7 @@ function handleConnection(socket) {
             const random = Math.floor(Math.random() * (2))
             sendMessage(connectedSockets[roomName][0].userName, roomName, JOINED_EVENT, {isYourTurn: random === 1})
             sendMessage(userName, roomName, JOINED_EVENT, {isYourTurn: random === 0})
+            createGame(roomName, connectedSockets[roomName][0].userName, userName)
         }
     })
 
@@ -84,6 +94,10 @@ function handleConnection(socket) {
                 coordinates:data.coordinates,
                 isYourTurn: true
             })
+            const win = gameManager.addToken(client.gameID, client.userName, data.coordinates)
+            if (win) {
+                console.log(`User: ${client.userName} win!`)
+            }
         }
     })
 }

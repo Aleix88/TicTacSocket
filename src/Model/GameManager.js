@@ -30,6 +30,16 @@ function addToken(gameID, playerName, coordinates) {
     return -1
 }
 
+function getGameBoard(gameID, playerName) {
+    const game = games.filter((game) => game.id === gameID)[0]
+    const tokenType = game.tokenType[playerName]
+
+    return ({
+        board: game.board,
+        tokenType: tokenType
+    })
+}
+
 function checkIfWin(game, tokenType, coordinates) {
     if (game) {
         //Check x axis
@@ -70,5 +80,6 @@ function checkIfWin(game, tokenType, coordinates) {
     return false
 }
 
+module.exports.getGameBoard = getGameBoard
 module.exports.addToken = addToken
 module.exports.createGame = createGame

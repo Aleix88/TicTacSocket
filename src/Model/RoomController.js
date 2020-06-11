@@ -1,6 +1,7 @@
 const Room = function (name) {
     this.name = name
     this.usernames = []
+    this.gameID = null
 }
 
 var createdRooms = []

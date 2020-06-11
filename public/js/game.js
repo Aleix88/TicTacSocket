@@ -6,6 +6,19 @@ document.addEventListener('DOMContentLoaded', function (event) {
     const userName = document.getElementById('userName').innerHTML
     const roomName = document.getElementById('roomName').innerHTML
 
+    function loadBoard(board, tokenType) {
+        console.log(board, tokenType)
+        $('.board-game').children().each(function (index) {
+            const box = $(this).children()[0]
+            const y = parseInt(index/3)
+            const x = index - parseInt(index/3) * 3
+            if (board[y][x] === tokenType && !$(box).hasClass('token')) {
+                $(box).removeClass('token-box')
+                $(box).addClass('token')
+            }
+        })
+    }
+
     //Send - Join game
     socket.emit('joinGame',  {
         userName: userName,
@@ -14,10 +27,13 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
     // //Wait players to join
     socket.on('joinedRoom', (data) => {
+        console.log("Joined game")
         $('#wait-modal').addClass('no-display')
         $('#disconnected-modal').addClass('no-display')
         isYourTurn = data.isYourTurn
         if (isYourTurn) $('.turn-label')[0].innerHTML = 'Is your turn!'
+        const {board, tokenType} = data.settings
+        loadBoard(board, tokenType)
     })
 
     //Wait opponent turn

@@ -67,9 +67,18 @@ function handleConnection(socket) {
         }  else {
             connectedSockets[roomName].push(new UserSocket(socket, userName, roomName))
             const random = Math.floor(Math.random() * (2))
-            sendMessage(connectedSockets[roomName][0].userName, roomName, JOINED_EVENT, {isYourTurn: random === 1})
-            sendMessage(userName, roomName, JOINED_EVENT, {isYourTurn: random === 0})
             createGame(roomName, connectedSockets[roomName][0].userName, userName)
+            const gameID = connectedSockets[roomName][0].gameID
+            const gameBoardP1 = gameManager.getGameBoard(gameID, connectedSockets[roomName][0].userName)
+            const gameBoardP2 = gameManager.getGameBoard(gameID, userName)
+            sendMessage(connectedSockets[roomName][0].userName, roomName, JOINED_EVENT, {
+                isYourTurn: random === 1,
+                settings: gameBoardP1
+            })
+            sendMessage(userName, roomName, JOINED_EVENT, {
+                isYourTurn: random === 0,
+                settings: gameBoardP2
+            })
         }
     })
 
